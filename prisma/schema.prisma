@@ -1,0 +1,44 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type UsersCart {
+  name     String
+  price    Int @default(0)
+  quantity Int @default(0)
+}
+
+type UsersSorting {
+  Filter String
+  Sort   String
+  max    String
+  min    String
+}
+
+model Release {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  images      String
+}
+
+model Users {
+  id      String       @id @default(auto()) @map("_id") @db.ObjectId
+  cart    UsersCart[]
+  sorting UsersSorting
+}
+
+model items {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  Description String
+  Name        String
+  Price       Int
+  Release     Boolean
+  Stock       Int
+  Type        String
+  images      String[]
+}
